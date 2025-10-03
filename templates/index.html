@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thinkbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <img src="static/thinkbot.png" width="270px" height="125">
+        <div id="chat-container" class="chat-container border rounded p-3 mt-4" style="height: 500px; overflow-y: scroll;"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="input-group mt-3">
+                    <select class="form-control" id="function-select">
+                        <option value="search">Search Knowledge Base</option>
+                        <option value="kbanswer">Answer Question from Knowledge Base</option>
+                        <option value="answer">Answer as Chatbot</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group-append">
+                    <input type="text" id="message-input" class="form-control mt-3" placeholder="Type your message here...">
+                    <button id="send-btn" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="static/main.js"></script>
+</body>
+</html>
