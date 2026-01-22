@@ -238,3 +238,6 @@ General code organization:
 - Follow the order of the user stories.
 - If you are stuck, take a careful look at the provided resources. If you are still stuck, ask a friend, AI assistant, or a mentor for help.
 - Read the user stories and tests carefully.
+- Python version 3.13 was used to make the project
+- The DB folder should look like below
+![db folder contents](screenshots/db_contents.png)

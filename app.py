@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from langchain_cohere import ChatCohere, CohereEmbeddings
 from langchain_chroma import Chroma
-from langchain.prompts import PromptTemplate
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_core.runnables import RunnableSequence
+from langchain_core.prompts import PromptTemplate
+import chromadb
 
 import os
 from dotenv import load_dotenv
@@ -11,14 +12,17 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# Load the vector database and QA chain
+
 def load_db():
     try:
+        
         print("Initializing embeddings...")
         embeddings = CohereEmbeddings(
             cohere_api_key=os.environ["COHERE_API_KEY"], 
             model="embed-english-v3.0"
-        )
-
+            )
+        
         print("Loading Chroma vector store...")
         vectordb = Chroma(persist_directory='db', embedding_function=embeddings)
 
@@ -37,12 +41,12 @@ def load_db():
 
         print("QA system initialized successfully.")
         return qa
+    
     except Exception as e:
         print("Error initializing QA system:", e)
         return None
 
 qa = load_db()
-
 
 def answer_from_knowledgebase(message):
     try:
@@ -109,6 +113,14 @@ def answer():
 def index():
     return render_template("index.html", title="")
 
+#Route used for debugging, can be removed
+@app.route('/debug-docs', methods=['GET'])
+def debug_docs():
+    docs = qa.retriever.get_relevant_documents("mosquito")
+    return jsonify({
+        f"Document {i+1}": doc.page_content
+        for i, doc in enumerate(docs)
+    })
 
 
 if __name__ == "__main__":
