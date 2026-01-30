@@ -89,27 +89,37 @@ To use the database in your app, you will need to add it in your project. Add th
 Import RetrievalQA, Chroma, and CohereEmbeddings into your project.
 
 ```python
-from langchain.chains import RetrievalQA
-from langchain.embeddings import CohereEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_cohere import ChatCohere, CohereEmbeddings
+from langchain_chroma import Chroma
+from langchain_classic.chains import RetrievalQA
+from langchain_core.runnables import RunnableSequence
+from langchain_core.prompts import PromptTemplate
 ```
 
 Create a function to load the database. To avoid any errors, make sure that you added the database to your project and that you have set your `COHERE_API_KEY` in your `.env` file. 
 
 ```python
 def load_db():
-    try:
-        embeddings = CohereEmbeddings(cohere_api_key=os.environ["COHERE_API_KEY"])
+    try:        
+        embeddings = CohereEmbeddings(
+            cohere_api_key=os.environ["COHERE_API_KEY"], 
+            model="embed-english-v3.0"
+            )
+        
         vectordb = Chroma(persist_directory='db', embedding_function=embeddings)
+        llm = ChatCohere(cohere_api_key=os.environ["COHERE_API_KEY"])
         qa = RetrievalQA.from_chain_type(
-            llm=Cohere(),
-            chain_type="refine",
+            llm=llm,
+            chain_type="stuff",
             retriever=vectordb.as_retriever(),
             return_source_documents=True
         )
+
         return qa
+    
     except Exception as e:
-        print("Error:", e)
+        print("Error initializing QA system:", e)
+        return None
 
 qa = load_db()
 ```
@@ -120,8 +130,17 @@ The function should call the RetrievalQA object that you created in the previous
 
 ```python
 def answer_from_knowledgebase(message):
-    res = qa({"query": message})
-    return res['result']
+    try:
+        res = qa.invoke({"query": message})
+        source_docs = res.get('source_documents', [])
+        
+        if not source_docs:
+            return "No relevant knowledge found in the database."
+
+        return res['result']
+    except Exception as e:
+        print("Error during QA invocation:", e)
+        return "Sorry, I couldn't retrieve an answer."
 ```
 
 Make sure to test that your function works before proceeding to the next step.
@@ -142,11 +161,19 @@ Your chatbot must also include a feature that allows a user to search your docum
 You can convert the sources into a string in the following manner:
 
 ```python
-res = qa({"query": message})
-sources = ""
-for count, source in enumerate(res['source_documents'],1):
-    sources += "Source " + str(count) + "\n"
-    sources += source.page_content + "\n"
+def search_knowledgebase(message):
+    try:
+        res = qa.invoke({"query": message})
+        source_docs = res.get('source_documents', [])
+        if not source_docs:
+            return "No sources found for your query."
+        sources = ""
+        for count, source in enumerate(source_docs, 1):
+            sources += f"Source {count}\n{source.page_content}\n"
+        return sources
+    except Exception as e:
+        print("Error during source retrieval:", e)
+        return "Error retrieving sources."
 ```
 
 #### Aceptance Criteria
