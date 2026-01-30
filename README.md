@@ -63,7 +63,7 @@ Recall that you have already created a question answering system that can provid
 
 Your chatbot will include this feature as an option to allow users to ask topic-specific questions based on a set of documents of your choice.
 
-![knowledge base](screenshots/knowledgebase.png)
+![knowledge base](screenshots/answer_from_knowledge_base.jpeg)
 
 #### 1. Create a Chroma database
 
@@ -135,7 +135,7 @@ Make sure to test that your function works before proceeding to the next step.
 
 Your chatbot must also include a feature that allows a user to search your document knowledgebase. Recall that the source documents are already returned when using RetrievalQA and can be retrieved by calling `results["source_documents"]`.
 
-![Alt text](screenshots/search.png)
+![Alt text](screenshots/search_knowledgebase.jpeg)
 
 #### 1. Implement the *search_knowledgebase* function
 
