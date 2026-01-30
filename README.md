@@ -205,7 +205,7 @@ Deploy the app on Render so that it becomes part of your portfolio. Use the foll
 
 #### 2. Set the `PYTHON_VERSION` and `COHERE_API_KEY` environment variables
 
-Render uses an older version of Python as default but this can be easily changed by setting an environment variable. Inside the Environment tab, create a new environment variable called `PYTHON_VERSION` and set its value to `3.10.12`. This will ensure that Render uses Python version 3.10.12 (the same version that you used in your notebook) for your app. Refer to the screenshot below for a visual guide.
+Render uses an older version of Python as default but this can be easily changed by setting an environment variable. Inside the Environment tab, create a new environment variable called `PYTHON_VERSION` and set its value to `3.13.7`. This will ensure that Render uses Python version 3.13.7 (the same version that you used in your notebook) for your app. Refer to the screenshot below for a visual guide.
 
 ![deploy](screenshots/deploy.png)
 
