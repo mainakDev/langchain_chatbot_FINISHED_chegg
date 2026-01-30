@@ -67,7 +67,7 @@ Your chatbot will include this feature as an option to allow users to ask topic-
 
 #### 1. Create a Chroma database
 
-Use the [notebook](https://colab.research.google.com/drive/1fGCia6TEjerDlysPqUFsBb8x3LwiG0Ef?usp=sharing) provided in the Generative Question Answering lesson to create a Chroma database and download it to your computer. Make sure that you choose a text that is related to your industry or that it's a text that may bring useful information.
+Use the [notebook](https://colab.research.google.com/drive/1luGTr5ztQvNJO-YisldNK2kS1Qly4uan?usp=sharing) provided in the Generative Question Answering lesson to create a Chroma database and download it to your computer. Make sure that you choose a text that is related to your industry or that it's a text that may bring useful information.
 
 >**Note:** Cohere has introduced a token limit for embeddings, so to prevent errors, it's recommended to use shorter texts, like a Wikipedia article. If you encounter any issues while creating your database using the notebook above, you are welcome to use [this](https://github.com/Thinkful-Ed/ai-in-web-dev-resources/raw/refs/heads/main/db.zip) pre-built database for your project.
 
@@ -237,6 +237,7 @@ Render uses an older version of Python as default but this can be easily changed
 ![deploy](screenshots/deploy.png)
 
 > **Note:** Render automatically spins down a [free web service](https://render.com/docs/free#:~:text=Render%20spins%20down%20a%20Free,is%20back%20up%20and%20running.) if it remains inactive for 15 minutes without any incoming traffic. When a request is received, Render promptly spins up the service. However, the spinning up process may take a few seconds or, in some cases, up to a couple of minutes. During this time, there might be a noticeable delay for incoming requests, resulting in brief moments of hanging or slower page loads in a browser.
+Since the search_knowledgebase() and answer_from_knowledgebase() functions may take a significant amount of time to execute, requests can time out when tested on Render. To avoid this issue, students are encouraged to test these functionalities locally on their own machines for smoother performance
 
 #### Aceptance Criteria
 
