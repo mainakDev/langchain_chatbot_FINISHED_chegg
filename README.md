@@ -268,4 +268,5 @@ General code organization:
 - Read the user stories and tests carefully.
 - Python version 3.13 was used to make the project
 - The DB folder should look like below
+
 ![db folder contents](screenshots/db_contents.png)
